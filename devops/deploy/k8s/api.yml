@@ -1,0 +1,82 @@
+#load balancer for api
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrix-api
+  namespace: $NAMESPACE
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    role: metrix-api
+  type: ClusterIP
+
+---
+# deployment configuration
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  generation: 1
+  name: metrix-api
+  namespace: $NAMESPACE
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      role: metrix-api
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        role: metrix-api
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: geth
+                operator: DoesNotExist
+      containers:
+      - image: $IMAGE_NAME
+        imagePullPolicy: Always
+        env:
+        - name: APP__ENV_NAME
+          value: "$APP__ENV_NAME"
+        - name: APP__ENV
+          value: "$APP__ENV"
+        - name: APP__DEBUG
+          value: "$APP__DEBUG"
+        - name: APP__CONSOLE_OPTIONS
+          value: "$APP__CONSOLE_OPTIONS"
+
+        - name: MONGODB__URL
+          value: "$MONGODB__URL"
+        - name: MONGODB__DB
+          value: "$MONGODB__DB"
+        name: metrix-api
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 40
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 5
+      imagePullSecrets:
+      - name: gitlab-registry
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

@@ -1,0 +1,79 @@
+#load balancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrix-mongo
+  labels:
+    name: mongo
+  namespace: $NAMESPACE
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  type: ClusterIP
+  selector:
+    role: metrix-mongo
+
+---
+#mongodb cluster
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: metrix-mongo
+  namespace: $NAMESPACE
+spec:
+  serviceName: "metrix-mongo"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: metrix-mongo
+    spec:
+      terminationGracePeriodSeconds: 10
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: geth
+                operator: DoesNotExist
+      containers:
+        - name: metrix-mongo
+          image: mongo:3.6
+          ports:
+            - containerPort: 27017
+          readinessProbe:
+            exec:
+              command:
+              - mongo
+              - --eval
+              - db.adminCommand('ping')
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          livenessProbe:
+            exec:
+              command:
+              - mongo
+              - --eval
+              - db.adminCommand('ping')
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          volumeMounts:
+            - name: mextix-mongo-storage
+              mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: mextix-mongo-storage
+      namespace: $NAMESPACE
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: gp2
+      resources:
+        requests:
+          storage: 20Gi

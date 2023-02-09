@@ -1,0 +1,22 @@
+version: '3'
+services:
+    ##
+    api:
+        build:
+            context: ../../../
+            dockerfile: devops/build/api/Dockerfile
+        ports:
+            - "80:80"
+        env_file:
+            - ../envs/local.env
+        volumes:
+            - ./../../../project:/var/www/project
+
+    ##
+    mongo:
+        ports:
+            - 27017:27017
+        volumes:
+            - /var/data/db:/data/db
+        env_file:
+            - ../envs/local.env

@@ -1,0 +1,9 @@
+version: '3'
+services:
+    ##
+    api:
+        image: ${API_IMAGE}:${VERSION_HASH}-rc
+        env_file:
+            - ../envs/test.env
+        volumes:
+            - ./../../../reports/tests:/var/www/project/reports
