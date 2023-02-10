@@ -1,0 +1,42 @@
+{
+    "name": "volodymyr-klymniuk/metrix-api",
+    "description": "Metrics",
+    "type": "service",
+    "license": "MIT-advertising",
+    "autoload": {
+        "psr-4": {
+            "VolodymyrKlymniuk\\MetrixApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Volodymyr Klymniuk",
+            "email": "Volodymyr.Klymniuk@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "symfony/yaml": "6.3.x-dev",
+        "symfony/validator": "6.3.x-dev",
+        "symfony/serializer": "6.3.x-dev",
+        "symfony/property-access": "6.3.x-dev",
+        "symfony/options-resolver": "6.3.x-dev",
+        "symfony/monolog-bundle": "3.x-dev",
+        "symfony/monolog-bridge": "6.3.x-dev",
+        "symfony/framework-bundle": "6.3.x-dev",
+        "symfony/flex": "2.x-dev",
+        "symfony/console": "6.3.x-dev",
+        "sensio/framework-extra-bundle": "^6.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true
+        }
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
+    }
+}

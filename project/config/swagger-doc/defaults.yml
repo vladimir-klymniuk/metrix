@@ -1,0 +1,11 @@
+defaultErros: &defaultResponseErrors
+  400: {description: "Invalid ID supplied"}
+  404: {description: "Not found"}
+
+defaultCodes: &defaultCodes
+  204: {description: "Success"}
+  400: {description: "Bad request"}
+  401: {description: "Not authenticate"}
+  403: {description: "Access denied"}
+  404: {description: "Not found"}
+  500: {description: "Internal server error"}

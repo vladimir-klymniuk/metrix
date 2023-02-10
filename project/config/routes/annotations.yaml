@@ -1,0 +1,7 @@
+runner:
+    resource: ../src/Runner/Controller/
+    type: annotation
+
+api:
+    resource: ../src/Api/Controller/
+    type: annotation

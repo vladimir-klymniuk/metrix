@@ -1,0 +1,18 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\Runner\:
+        resource: '../../src/Runner'
+        exclude:  '../../src/Runner/{Document,Repository,Event}'
+
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    App\Runner\Controller\:
+        resource: '../../src/Runner/Controller'
+        tags: ['controller.service_arguments']

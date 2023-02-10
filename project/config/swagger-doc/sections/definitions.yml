@@ -1,0 +1,12 @@
+sf_object_definitions:
+  -
+    name: 'ResultDTO'
+    mapping: {type: ['phpdoc'], class: 'App\DTO\ResultDTO'}
+
+  -
+    name: 'ResultLevelDTO'
+    mapping: {type: ['phpdoc'], class: 'App\DTO\ResultLevelDTO'}
+
+  -
+    name: 'ResultValueDTO'
+    mapping: {type: ['phpdoc'], class: 'App\DTO\ResultValueDTO'}

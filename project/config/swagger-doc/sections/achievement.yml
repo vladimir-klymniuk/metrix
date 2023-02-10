@@ -1,0 +1,9 @@
+sf_route_paths:
+  -
+    route: 'achievements'
+    tags: ['achievement']
+    response: {$ref: '#/definitions/ResultDTO'}
+    openapi_params:
+      parameters:
+        - { name: "id", in: 'path', type: "string", description: "Profile Id" }
+        - { name: "game", in: 'path', type: "string", description: "Game type (csgo|lol|dota)" }

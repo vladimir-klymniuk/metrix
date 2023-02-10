@@ -1,0 +1,11 @@
+swagger_ui_gen:
+    options_provider:
+        defaults:
+            - '%kernel.root_dir%/../config/swagger-doc/defaults.yml'
+        files:
+            - '%kernel.root_dir%/../config/swagger-doc/general.yml'
+            - '%kernel.root_dir%/../config/swagger-doc/tags.yml'
+            - '%kernel.root_dir%/../config/swagger-doc/security_def.yml'
+            - '%kernel.root_dir%/../config/swagger-doc/definitions.yml'
+        folders:
+            - '%kernel.root_dir%/../config/swagger-doc/sections'

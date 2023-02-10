@@ -1,0 +1,13 @@
+swagger: '2.0'
+host: ''
+basePath: '/'
+schemes: ['http', 'https']
+info:
+    description: ""
+    version: "1.0"
+    title: "DreamTeam Achievement Service"
+consumes: []
+produces: ["application/json"]
+externalDocs:
+    description: "Find out more about Swagger"
+    url: "http://swagger.io"
